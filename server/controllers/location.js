@@ -17,9 +17,9 @@ var calculateDistance = function(lat1, lon1, lat2, lon2) {
     var latDelta = (lat2 - lat1).toRadians();
     var lonDelta = (lon2 - lon1).toRadians();
 
-    var a = Math.sin(latDelta/2) * Math.sin(latDelta/2) +
+    var a = Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
         Math.cos(lat1rad) * Math.cos(lat2rad) *
-        Math.sin(lonDelta/2) * Math.sin(lonDelta/2);
+        Math.sin(lonDelta / 2) * Math.sin(lonDelta / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     var d = R * c;
@@ -38,10 +38,11 @@ exports.save = function(req, res) {
     Location.findOne({})
         .sort('-date')
         .exec(function(err, previousLocation) {
-            location.distance = Math.round(calculateDistance(location.lat, location.lon, previousLocation.lat, previousLocation.lon) * 1000);
-            location.interval = Math.round((location.date - previousLocation.date) / 1000);
-            location.speed = location.distance / location.interval * 3.6;
-
+            if (previousLocation) {
+                location.distance = Math.round(calculateDistance(location.lat, location.lon, previousLocation.lat, previousLocation.lon) * 1000);
+                location.interval = Math.round((location.date - previousLocation.date) / 1000);
+                location.speed = location.distance / location.interval * 3.6;
+            }
             location.save(function(err) {
                 if (err) {
                     res.status(500);

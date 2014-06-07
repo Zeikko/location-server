@@ -24,11 +24,13 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
                             location: {
                                 lat: locations[0].lat,
                                 lng: locations[0].lon,
-                                message: "I'm here",
+                                message: 'I was here ' + moment(locations[0].date).fromNow(),
                                 focus: false,
                                 draggable: false
                             }
-                        }
+                        },
+                        speed: Math.round(locations[0].speed * 100) / 100,
+                        timeago: moment(locations[0].date).fromNow()
                     });
                 }
             });

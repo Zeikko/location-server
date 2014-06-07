@@ -1,4 +1,6 @@
 <section data-ng-controller="IndexController" data-ng-init="getLocations()">
     <h1 mean-token="'home-default'"></h1>
+    <h3>Speed: {{speed}} km / h</h3>
+    <h3>Last update: {{timeago}}</h3>
     <leaflet markers="markers" center="center" paths="paths" class="map"></leaflet>
 </section>

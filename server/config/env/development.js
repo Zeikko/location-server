@@ -3,7 +3,7 @@
 module.exports = {
     db: 'mongodb://localhost/locationserver-development',
     app: {
-        name: 'MEAN - FullStack JS - Development'
+        name: 'Realtime Location Tracker'
     },
     facebook: {
         clientID: 'APP_ID',

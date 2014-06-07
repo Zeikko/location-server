@@ -4,7 +4,7 @@ module.exports = {
     db: 'mongodb://localhost/locationserver-test',
     port: 3001,
     app: {
-        name: 'MEAN - A Modern Stack - Test'
+        name: 'Realtime Location Tracker'
     },
     facebook: {
         clientID: 'APP_ID',

@@ -26,18 +26,27 @@ var calculateDistance = function(lat1, lon1, lat2, lon2) {
     return d;
 };
 
+var isNumber = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
 /**
  * Create a location
  */
 exports.save = function(req, res) {
 
     var location = new Location(req.body);
-    location.lat = req.param('lat');
-    location.lon = req.param('lon');
+    if (isNumber(req.param('lat')) && req.param('lon')) {
+        location.lat = req.param('lat');
+        location.lon = req.param('lon');
+    } else {
+        res.status(400).send('Invalid lat or lon');
+    }
 
     Location.findOne({})
         .sort('-date')
         .exec(function(err, previousLocation) {
+            console.log(previousLocation);
             if (previousLocation) {
                 location.distance = Math.round(calculateDistance(location.lat, location.lon, previousLocation.lat, previousLocation.lon) * 1000);
                 location.interval = Math.round((location.date - previousLocation.date) / 1000);
@@ -45,7 +54,7 @@ exports.save = function(req, res) {
             }
             location.save(function(err) {
                 if (err) {
-                    res.status(500);
+                    res.status(500).send('Error while saving location');
                 } else {
                     res.jsonp(location);
                 }

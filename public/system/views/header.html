@@ -1,16 +1,16 @@
 <div class="page-header" data-ng-controller="HeaderController">
-  <div class="logo pull-left">
-    <a class="navbar-brand" ui-sref="home" mean-token="'site-title'">MEAN</a>
-  </div>
+    <div class="logo pull-left">
+        <a class="navbar-brand" ui-sref="home" mean-token="'site-title'"></a>
+    </div>
 
-  <div class="left pull-left">
-    <ul class="navbar-nav nav">
-      <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-          <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
-      </li>
-    </ul>
-  </div>
-
+    <div class="left pull-left">
+        <ul class="navbar-nav nav">
+            <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+                <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
+            </li>
+        </ul>
+    </div>
+    <!--
   <div class="account">
     <div class="text-edit">
       <div class="pull-right" data-ng-show="global.authenticated" mean-token-editable></div>
@@ -35,4 +35,5 @@
         </li>
     </ul>
   </div>
+  -->
 </div>

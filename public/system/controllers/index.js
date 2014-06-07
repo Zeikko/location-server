@@ -1,12 +1,16 @@
 'use strict';
 
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Locations',
-    function($scope, Global, Locations) {
+angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Locations', '$interval',
+    function($scope, Global, Locations, $interval) {
         $scope.global = Global;
 
         $scope.center = {};
         $scope.paths = {};
         $scope.markers = {};
+
+        $interval(function() {
+        	$scope.getLocations();
+        }, 1000 * 30);
 
         $scope.getLocations = function() {
             Locations.query(function(locations) {

@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mean.system', ['mean.controllers.login','mean-factory-interceptor', 'leaflet-directive']);
+angular.module('mean.system', ['mean.controllers.login','mean-factory-interceptor', 'leaflet-directive', 'simpleCharts']);

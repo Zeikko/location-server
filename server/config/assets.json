@@ -2,12 +2,14 @@
     "core": {
         "css": {
             "public/build/css/dist.min.css": [
-                "public/**/assets/css/*.css",
-                "public/system/lib/leaflet-dist/leaflet.css"
+                "public/system/lib/leaflet-dist/leaflet.css",
+                "public/system/lib/ng-simple-charts/ng-simple-charts.css",
+                "public/**/assets/css/*.css"
             ]
         },
         "js": {
             "public/build/js/dist.min.js": [
+                "public/system/lib/jquery/jquery.js",
                 "public/system/lib/angular/angular.js",
                 "public/system/lib/angular-mocks/angular-mocks.js",
                 "public/system/lib/angular-cookies/angular-cookies.js",
@@ -19,6 +21,9 @@
                 "public/system/lib/leaflet-dist/leaflet.js",
                 "public/system/lib/angular-leaflet-directive/dist/angular-leaflet-directive.js",
                 "public/system/lib/momentjs/moment.js",
+                "public/system/lib/flot/jquery.flot.js",
+                "public/system/lib/flot/jquery.flot.time.js",
+                "public/system/lib/ng-simple-charts/ng-simple-charts.min.js",
                 "public/init.js",
                 "public/*/*.js",
                 "public/*/{controllers,routes,services}/*.js"

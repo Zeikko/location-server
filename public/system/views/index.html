@@ -1,6 +1,9 @@
 <section data-ng-controller="IndexController" data-ng-init="getLocations()">
     <h1 mean-token="'home-default'"></h1>
-    <h3>Speed: {{speed}} km / h</h3>
+    <h3 ng-if="distance">Distance: {{distance}} meters</h3>
+    <h3 ng-if="duration">Duration: {{duration}}</h3>
     <h3>Last update: {{timeago}}</h3>
+    <h3 ng-if="speed">Speed: {{speed}} km / h</h3>
+    <div style="height: 300px" class="chart" timeserieschart options="chartOptions" data="speedChartData"></div>
     <leaflet markers="markers" center="center" paths="paths" class="map"></leaflet>
 </section>

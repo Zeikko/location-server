@@ -7,10 +7,14 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         $scope.center = {};
         $scope.paths = {};
         $scope.markers = {};
+        $scope.speed = 0;
 
         $interval(function() {
-        	$scope.getLocations();
+            $scope.getLocations();
         }, 1000 * 30);
+
+        $scope.chartOptions = {
+        }
 
         $scope.getLocations = function() {
             Locations.query(function(locations) {
@@ -33,12 +37,49 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
                                 draggable: false
                             }
                         },
-                        speed: Math.round(locations[0].speed * 100) / 100,
-                        timeago: moment(locations[0].date).fromNow()
+                        timeago: moment(locations[0].date).fromNow(),
+                        speedChartData: [toFlotSeries(locations)],
+                        distance: totalDistance(locations),
+                        duration: totalDuration(locations)
                     });
+                    if (typeof locations[0].speed !== 'undefined') {
+                        $scope.speed = Math.round(locations[0].speed * 100) / 100;
+                    }
                 }
             });
         };
+
+        var totalDuration = function(locations) {
+            var pad = function(number) {
+                if (number < 9) {
+                    number = '0' + number;
+                }
+                return number;
+            }
+
+            var start = locations[0];
+            console.log(start.date);
+            var end = locations.pop();
+            console.log(end.date);
+            var duration = moment(start.date) - moment(end.date);
+            duration /= 1000;
+            var hours = Math.floor(duration / 3600);
+            duration -= 3600 * hours;
+            var minutes = Math.floor(duration / 60);
+            duration -= 60 * minutes;
+            var seconds = Math.round(duration);
+            return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+        }
+
+        var totalDistance = function(locations) {
+            var distance = 0;
+            angular.forEach(locations, function(location, key) {
+                if (!isNaN(location.distance)) {
+                    distance += location.distance;
+                }
+            });
+            return distance;
+        }
 
         var toLeafletPath = function(locations) {
             var path = {
@@ -54,5 +95,19 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             });
             return path;
         };
+
+        var toFlotSeries = function(locations) {
+            var serie = [];
+            angular.forEach(locations, function(location, key) {
+                if (!isNaN(location.speed)) {
+                    serie.push([
+                        moment(location.date).valueOf(),
+                        Math.round(location.speed * 100) / 100
+                    ]);
+                }
+            });
+            serie.reverse();
+            return serie;
+        }
     }
 ]);

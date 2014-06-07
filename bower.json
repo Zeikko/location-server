@@ -12,6 +12,9 @@
         "angular-ui-router": "#master",
         "leaflet": "latest",
         "angular-leaflet-directive": "latest",
-        "momentjs": "latest"
+        "momentjs": "latest",
+        "ng-simple-charts": "latest",
+        "jquery": "1.x.x",
+        "flot": "latest"
     }
 }

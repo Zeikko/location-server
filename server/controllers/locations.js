@@ -60,7 +60,19 @@ exports.save = function(req, res) {
     } else {
         res.status(400).send('Invalid lat or lon');
     }
+};
 
-
-
+/**
+ * List of Locations
+ */
+exports.all = function(req, res) {
+    Location.find().sort('-date').exec(function(err, locations) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(locations);
+        }
+    });
 };

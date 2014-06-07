@@ -46,3 +46,8 @@ footer p {
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+
+.map {
+    width: 100%;
+    height: 500px;
+}

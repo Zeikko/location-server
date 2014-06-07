@@ -1,3 +1,4 @@
-<section data-ng-controller="IndexController">
-    <h1 mean-token="'home-default'">This is the home view</h1>
+<section data-ng-controller="IndexController" data-ng-init="getLocations()">
+    <h1 mean-token="'home-default'"></h1>
+    <leaflet markers="markers" center="center" paths="paths" class="map"></leaflet>
 </section>

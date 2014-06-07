@@ -39,26 +39,28 @@ exports.save = function(req, res) {
     if (isNumber(req.param('lat')) && req.param('lon')) {
         location.lat = req.param('lat');
         location.lon = req.param('lon');
+
+        Location.findOne({})
+            .sort('-date')
+            .exec(function(err, previousLocation) {
+                console.log(previousLocation);
+                if (previousLocation) {
+                    location.distance = Math.round(calculateDistance(location.lat, location.lon, previousLocation.lat, previousLocation.lon) * 1000);
+                    location.interval = Math.round((location.date - previousLocation.date) / 1000);
+                    location.speed = location.distance / location.interval * 3.6;
+                }
+                location.save(function(err) {
+                    if (err) {
+                        res.status(500).send('Error while saving location');
+                    } else {
+                        res.jsonp(location);
+                    }
+                });
+            });
     } else {
         res.status(400).send('Invalid lat or lon');
     }
 
-    Location.findOne({})
-        .sort('-date')
-        .exec(function(err, previousLocation) {
-            console.log(previousLocation);
-            if (previousLocation) {
-                location.distance = Math.round(calculateDistance(location.lat, location.lon, previousLocation.lat, previousLocation.lon) * 1000);
-                location.interval = Math.round((location.date - previousLocation.date) / 1000);
-                location.speed = location.distance / location.interval * 3.6;
-            }
-            location.save(function(err) {
-                if (err) {
-                    res.status(500).send('Error while saving location');
-                } else {
-                    res.jsonp(location);
-                }
-            });
-        });
+
 
 };
